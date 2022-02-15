@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BulletinController {
@@ -28,19 +29,19 @@ public class BulletinController {
         return bulletinService.getAllBulletin();
     }
 
-    @GetMapping("/api/post/{id}")
-    public List<Bulletin> getBulletin(@PathVariable Long id) {
-        return bulletinService.getBulletin(id);
+    @GetMapping("/api/post/{bulletinId}")
+    public Optional<Bulletin> getBulletin(@PathVariable Long bulletinId) {
+        return bulletinService.getBulletin(bulletinId);
     }
 
-    @DeleteMapping("/api/post/{id}")
-    public void deleteBulletin(@PathVariable Long id) {
-        bulletinService.deleteBulletin(id);
+    @DeleteMapping("/api/post/{bulletinId}")
+    public void deleteBulletin(@PathVariable Long bulletinId) {
+        bulletinService.deleteBulletin(bulletinId);
     }
 
-    @PatchMapping("/api/post/{id}")
-    public Bulletin updating(@PathVariable Long id, @RequestBody BulletinRequestDto requestDto) {
-        return bulletinService.updating(id, requestDto);
+    @PatchMapping("/api/post/{bulletinId}")
+    public Bulletin updating(@PathVariable Long bulletinId, @RequestBody BulletinRequestDto requestDto) {
+        return bulletinService.updating(bulletinId, requestDto);
     }
 
 }

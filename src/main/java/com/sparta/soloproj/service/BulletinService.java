@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BulletinService {
@@ -31,16 +32,16 @@ public class BulletinService {
         return bulletinRepository.findAll(Sort.by(Sort.Direction.DESC, "modifiedAt"));
     }
 
-    public List<Bulletin> getBulletin(Long id) {
-        return bulletinRepository.findAllById(id);
+    public Optional<Bulletin> getBulletin(Long bulletinId) {
+        return bulletinRepository.findById(bulletinId);
     }
 
-    public void deleteBulletin(Long id) {
-        bulletinRepository.deleteById(id);
+    public void deleteBulletin(Long bulletinId) {
+        bulletinRepository.deleteById(bulletinId);
     }
 
-    public Bulletin updating(Long id, BulletinRequestDto requestDto) {
-        Bulletin bulletin = bulletinRepository.findById(id)
+    public Bulletin updating(Long bulletinId, BulletinRequestDto requestDto) {
+        Bulletin bulletin = bulletinRepository.findById(bulletinId)
                 .orElseThrow(() -> new NullPointerException("해당 글이 존재하지 않습니다."));
 
         String title = requestDto.getTitle();
