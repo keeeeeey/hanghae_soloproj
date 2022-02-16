@@ -29,7 +29,7 @@ public class BulletinService {
     }
 
     public List<Bulletin> getAllBulletin() {
-        return bulletinRepository.findAll(Sort.by(Sort.Direction.DESC, "modifiedAt"));
+        return bulletinRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Optional<Bulletin> getBulletin(Long bulletinId) {

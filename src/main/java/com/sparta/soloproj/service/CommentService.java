@@ -19,13 +19,15 @@ public class CommentService {
 
     public Comment postingComment(Long bulletinId, CommentRequestDto requestDto) {
         Comment comment = new Comment(requestDto, bulletinId);
-        commentRepository.save(comment);
+        if (!comment.getComment().equals("")) {
+            commentRepository.save(comment);
+        }
 
         return comment;
     }
 
     public List<Comment> getComment(Long bulletinId) {
-        return commentRepository.findAllByBulletinId(bulletinId);
+        return commentRepository.findAllById(bulletinId);
     }
 
     public void deleteComment(Long commentId) {
@@ -37,7 +39,11 @@ public class CommentService {
                 .orElseThrow(() -> new NullPointerException("해당 글이 존재하지 않습니다."));
         String comment2 = requestDto.getComment();
         comment.setComment(comment2);
-        commentRepository.save(comment);
+
+        if (!comment.getComment().equals("")) {
+            commentRepository.save(comment);
+        }
+
         return comment;
     }
 }
