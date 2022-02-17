@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class BulletinService {
     }
 
     public List<Bulletin> getAllBulletin() {
-        return bulletinRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        return bulletinRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public Optional<Bulletin> getBulletin(Long bulletinId) {
@@ -40,18 +41,12 @@ public class BulletinService {
         bulletinRepository.deleteById(bulletinId);
     }
 
+    @Transactional
     public Bulletin updating(Long bulletinId, BulletinRequestDto requestDto) {
         Bulletin bulletin = bulletinRepository.findById(bulletinId)
                 .orElseThrow(() -> new NullPointerException("해당 글이 존재하지 않습니다."));
 
-        String title = requestDto.getTitle();
-        String content = requestDto.getContent();
-        String writer = requestDto.getWriter();
-        bulletin.setTitle(title);
-        bulletin.setContent(content);
-        bulletin.setWriter(writer);
-
-        bulletinRepository.save(bulletin);
+        bulletin.update(requestDto);
 
         return bulletin;
     }

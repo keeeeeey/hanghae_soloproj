@@ -6,6 +6,7 @@ import com.sparta.soloproj.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -27,21 +28,20 @@ public class CommentService {
     }
 
     public List<Comment> getComment(Long bulletinId) {
-        return commentRepository.findAllById(bulletinId);
+        return commentRepository.findAllByBulletinId(bulletinId);
     }
 
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
     }
 
+    @Transactional
     public Comment updateComment(Long commentId, CommentRequestDto requestDto) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NullPointerException("해당 글이 존재하지 않습니다."));
-        String comment2 = requestDto.getComment();
-        comment.setComment(comment2);
 
         if (!comment.getComment().equals("")) {
-            commentRepository.save(comment);
+            comment.updateComment(requestDto);
         }
 
         return comment;

@@ -33,4 +33,10 @@ public class Bulletin extends Timestamped {
         this.writer = requestDto.getWriter();
     }
 
+    public void update(BulletinRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+        this.writer = requestDto.getWriter();
+    }
+
 }
