@@ -4,7 +4,6 @@ import com.sparta.soloproj.dto.BulletinRequestDto;
 import com.sparta.soloproj.model.Bulletin;
 import com.sparta.soloproj.repository.BulletinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

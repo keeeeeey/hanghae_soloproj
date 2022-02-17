@@ -20,12 +20,12 @@ public class CommentController {
     }
 
     @PostMapping("/comment/{bulletinId}")
-    public ResponseEntity postingComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long bulletinId) {
+    public ResponseEntity<String> postingComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long bulletinId) {
         Comment comment = commentService.postingComment(bulletinId, requestDto);
         if (comment.getComment().equals("")) {
-            return new ResponseEntity("댓글 내용을 입력해주세요.", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("댓글 내용을 입력해주세요.", HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity("댓글이 작성되었습니다.", HttpStatus.OK);
+        return new ResponseEntity<>("댓글이 작성되었습니다.", HttpStatus.OK);
     }
 
     @GetMapping("/comment/{bulletinId}")
@@ -39,12 +39,12 @@ public class CommentController {
     }
 
     @PatchMapping("/comment/{commentId}")
-    public ResponseEntity updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto) {
+    public ResponseEntity<String> updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto) {
         Comment comment = commentService.updateComment(commentId, requestDto);
 
         if (comment.getComment().equals("")) {
-            return new ResponseEntity("댓글 내용을 입력해주세요.", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("댓글 내용을 입력해주세요.", HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity("댓글이 작성되었습니다.", HttpStatus.OK);
+        return new ResponseEntity<>("댓글이 작성되었습니다.", HttpStatus.OK);
     }
 }
